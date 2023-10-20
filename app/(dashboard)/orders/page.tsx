@@ -148,9 +148,11 @@ export default function DashPage() {
                 <th>Order Complete Status</th>
                 <th>Recipient</th>
                 <th>Order Status </th>
-                <th>Owner</th>
                 <th>Amount Paid Out</th>
                 <th>Edit</th>
+                <th>Pause</th>
+                <th>Start</th>
+                <th>Delete</th>
               </tr>
               {posts.map((item) => {
                 return (
@@ -159,15 +161,24 @@ export default function DashPage() {
                     <td>No 2</td>
                     <td>No3</td>
                     <td>No 4</td>
-                    <td>No 1</td>
                     <td>No 2</td>
                     <td>No3</td>
                     <td>No 4</td>
                     <td>No 4</td>
                     <td>No 4</td>
                     <Link href="/orders/native/1">
-                      <td>Edit</td>
+                      <td className="py-5">Edit</td>
                     </Link>
+
+                    <td>
+                      <button>Pause</button>
+                    </td>
+                    <td>
+                      <button>Start</button>
+                    </td>
+                    <td>
+                      <button>Delete</button>
+                    </td>
                   </tr>
                 );
               })}
@@ -189,9 +200,11 @@ export default function DashPage() {
                 <th>Order Complete Status</th>
                 <th>Recipient</th>
                 <th>Order Status </th>
-                <th>Owner</th>
                 <th>Amount Paid Out</th>
                 <th>Edit</th>
+                <th>Pause</th>
+                <th>Start</th>
+                <th>Delete</th>
               </tr>
               {posts.map((item) => {
                 return (
@@ -206,9 +219,19 @@ export default function DashPage() {
                     <td>No 4</td>
                     <td>No 4</td>
                     <td>No 4</td>
-                    <Link href="/orders/erc/1">
-                      <td>Edit</td>
+                    <Link href="/orders/native/1">
+                      <td className="py-5">Edit</td>
                     </Link>
+
+                    <td>
+                      <button>Pause</button>
+                    </td>
+                    <td>
+                      <button>Start</button>
+                    </td>
+                    <td>
+                      <button>Delete</button>
+                    </td>
                   </tr>
                 );
               })}
