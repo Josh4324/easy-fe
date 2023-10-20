@@ -9,11 +9,11 @@ export const marketingConfig: MarketingConfig = {
   mainNav: [
     {
       title: "Orders",
-      href: "/dashboard",
+      href: "/orders",
     },
     {
       title: "Transactions",
-      href: "/pricing",
+      href: "/transactions",
     },
     {
       title: "Blog",
