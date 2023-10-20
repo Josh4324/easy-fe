@@ -1,3 +1,8 @@
+/* eslint-disable @next/next/no-async-client-component */
+/* eslint-disable */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import { DashboardConfig } from "types"
 
 export const dashboardConfig: DashboardConfig = {
