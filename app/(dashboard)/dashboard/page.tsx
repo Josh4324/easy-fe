@@ -16,7 +16,7 @@ import { formatDate } from "@/lib/utils";
 export default async function DashPage() {
   const createReadContract = async () => {
     const { ethereum } = window;
-    const provider = new ethers.providers.Web3Provider(ethereum);
+    const provider = new ethers.BrowserProvider(ethereum);
     const payContract = new ethers.Contract(
       "0x577336CBadDDe8F312feA34DD0885830d9fBB0b3",
       todoABI.abi,
