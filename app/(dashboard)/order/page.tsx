@@ -117,7 +117,8 @@ export default function OrderPage() {
 
           <form onSubmit={createOrder} className="mt-5">
             <div className="grid gap-2">
-              <div className="grid gap-1">
+              <div className="grid gap-1 mb-3">
+                <label>Enter Order Name</label>
                 <input
                   type="text"
                   className={cn(
@@ -128,7 +129,8 @@ export default function OrderPage() {
                   required
                 />
               </div>
-              <div className="grid gap-1">
+              <div className="grid gap-1 mb-3">
+                <label>Enter Total Order Amount</label>
                 <input
                   type="text"
                   className={cn(
@@ -139,7 +141,8 @@ export default function OrderPage() {
                   required
                 />
               </div>
-              <div className="grid gap-1">
+              <div className="grid gap-1 mb-3">
+                <label>Enter Order Amount</label>
                 <input
                   type="text"
                   className={cn(
@@ -150,7 +153,8 @@ export default function OrderPage() {
                   required
                 />
               </div>
-              <div className="grid gap-1">
+              <div className="grid gap-1 mb-3">
+                <label>Enter Date of First Payment</label>
                 <input
                   type="datetime-local"
                   className={cn(
@@ -161,7 +165,8 @@ export default function OrderPage() {
                   required
                 />
               </div>
-              <div className="grid gap-1">
+              <div className="grid gap-1 mb-3">
+                <label>Enter Date of Last Payment</label>
                 <input
                   type="datetime-local"
                   className={cn(
@@ -173,6 +178,7 @@ export default function OrderPage() {
                 />
               </div>
               <div className="grid gap-1">
+                <label>Enter Payment Interval (seconds)</label>
                 <input
                   type="text"
                   className={cn(
@@ -184,6 +190,7 @@ export default function OrderPage() {
                 />
               </div>
               <div className="grid gap-1">
+                <label>Enter Recipient Address</label>
                 <input
                   type="text"
                   className={cn(

@@ -15,11 +15,11 @@ import { buttonVariants } from "@/components/ui/button";
 import { polygon_native } from "@/utils/constant";
 import { useAccount, useNetwork } from "wagmi";
 
-import { formatDate } from "@/lib/utils";
-
 export default function DashPage() {
   const [state, setState] = useState(true);
+  const [data, setData] = useState([]);
   const { address } = useAccount();
+
   const createReadContract = async () => {
     const { ethereum } = window;
     const provider = new ethers.BrowserProvider(ethereum);
@@ -34,7 +34,7 @@ export default function DashPage() {
   const getOrders = async () => {
     const contract = await createReadContract();
     const data = await contract.getOrders(address);
-    console.log(data);
+    setData(data);
   };
 
   useEffect(() => {
@@ -139,10 +139,10 @@ export default function DashPage() {
       <hr className="my-8" />
 
       {state ? (
-        <section style={{ marginTop: "30px", overflowX: "auto" }} className="">
+        <section>
           <table className="font-heading mx-auto w-98 text-white px-3 table-auto w-full">
-            <tbody>
-              <tr className="font-heading">
+            <thead className="font-heading">
+              <tr>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Order Amount</th>
@@ -157,18 +157,28 @@ export default function DashPage() {
                 <th>Start</th>
                 <th>Delete</th>
               </tr>
-              {posts.map((item) => {
+            </thead>
+            <tbody>
+              {data.map((item) => {
                 return (
-                  <tr key={item.id} className="font-heading py-3">
-                    <td className="py-3">No 1</td>
-                    <td>No 2</td>
-                    <td>No3</td>
-                    <td>No 4</td>
-                    <td>No 2</td>
-                    <td>No3</td>
-                    <td>No 4</td>
-                    <td>No 4</td>
-                    <td>No 4</td>
+                  <tr key={item?.id} className="font-heading py-3">
+                    <td className="py-3">{String(item?.id)}</td>
+                    <td className="text-center">{item?.name}</td>
+                    <td className="text-center">
+                      {String(Number(item?.order_amount) / 10 ** 18)
+                        ? String(Number(item?.order_amount) / 10 ** 18)
+                        : null}
+                    </td>
+                    <td className="text-center">
+                      {String(Number(item?.amount) / 10 ** 18)}
+                    </td>
+                    <td className="text-center">{String(item?.interval)}</td>
+                    <td className="text-center">{String(item?.status)}</td>
+                    <td className="text-center">{item?.recipient}</td>
+                    <td className="text-center">{String(item?.or_status)}</td>
+                    <td className="text-center">
+                      {String(Number(item?.amountPaid) / 10 ** 18)}
+                    </td>
                     <Link href="/orders/native/1">
                       <td className="py-5">Edit</td>
                     </Link>
@@ -191,10 +201,10 @@ export default function DashPage() {
       ) : null}
 
       {state === false ? (
-        <section style={{ marginTop: "30px", overflowX: "auto" }} className="">
+        <section>
           <table className="font-heading mx-auto w-98 text-white px-3 table-auto w-full">
-            <tbody>
-              <tr className="font-heading">
+            <thead className="font-heading">
+              <tr>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Order Amount</th>
@@ -209,6 +219,8 @@ export default function DashPage() {
                 <th>Start</th>
                 <th>Delete</th>
               </tr>
+            </thead>
+            <tbody>
               {posts.map((item) => {
                 return (
                   <tr key={item.id} className="font-heading py-3">

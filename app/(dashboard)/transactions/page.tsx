@@ -8,103 +8,43 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 import { compareDesc } from "date-fns";
-import todoABI from "../../../abi/todo.json";
 import { ethers } from "ethers";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+
+import nativeABI from "../../../abi/native.json";
+
+import { polygon_native } from "@/utils/constant";
+import { useAccount } from "wagmi";
 
 import { formatDate } from "@/lib/utils";
 
 export default function TransactionPage() {
   const [state, setState] = useState(true);
+  const { address } = useAccount();
+  const [data, setData] = useState([]);
+
   const createReadContract = async () => {
     const { ethereum } = window;
     const provider = new ethers.BrowserProvider(ethereum);
     const payContract = new ethers.Contract(
-      "0x577336CBadDDe8F312feA34DD0885830d9fBB0b3",
-      todoABI.abi,
+      polygon_native,
+      nativeABI.abi,
       provider
     );
     return payContract;
   };
 
-  const getTodos = async () => {
+  const getOrders = async () => {
     const contract = await createReadContract();
-    const data = await contract.getAllTodos("pending");
+    const data = await contract.getTransactions(address);
     console.log(data);
+    setData(data);
   };
 
   useEffect(() => {
-    getTodos();
+    getOrders();
   }, []);
-
-  const allPosts = [
-    {
-      _id: 0,
-      published: "2011-10-11",
-      image:
-        "https://res.cloudinary.com/josh4324/image/upload/v1695643970/vrxhjnw8yxnphecojnde.png",
-      title: "Title 1",
-      description: "Description 1",
-      date: "2011-10-11",
-      slug: "slug",
-    },
-    {
-      _id: 1,
-      published: "2012-10-11",
-      image:
-        "https://res.cloudinary.com/josh4324/image/upload/v1695643970/vrxhjnw8yxnphecojnde.png",
-      title: "Title 1",
-      description: "Description 1",
-      date: "2011-10-11",
-      slug: "slug",
-    },
-    {
-      _id: 2,
-      published: "2013-10-11",
-      image:
-        "https://res.cloudinary.com/josh4324/image/upload/v1695643970/vrxhjnw8yxnphecojnde.png",
-      title: "Title 1",
-      description: "Description 1",
-      date: "2011-10-11",
-      slug: "slug",
-    },
-    {
-      _id: 3,
-      published: "2014-10-11",
-      image:
-        "https://res.cloudinary.com/josh4324/image/upload/v1695643970/vrxhjnw8yxnphecojnde.png",
-      title: "Title 1",
-      description: "Description 1",
-      date: "2011-10-11",
-      slug: "slug",
-    },
-    {
-      _id: 4,
-      published: "2015-10-11",
-      image:
-        "https://res.cloudinary.com/josh4324/image/upload/v1695643970/vrxhjnw8yxnphecojnde.png",
-      title: "Title 1",
-      description: "Description 1",
-      date: "2011-10-11",
-      slug: "slug",
-    },
-    {
-      _id: 5,
-      published: "2016-10-11",
-      image:
-        "https://res.cloudinary.com/josh4324/image/upload/v1695643970/vrxhjnw8yxnphecojnde.png",
-      title: "Title 1",
-      description: "Description 1",
-      date: "2011-10-11",
-      slug: "slug",
-    },
-  ];
-  const posts = allPosts
-    .filter((post) => post.published)
-    .sort((a, b) => {
-      return compareDesc(new Date(a.date), new Date(b.date));
-    });
 
   return (
     <div className="container ">
@@ -143,14 +83,16 @@ export default function TransactionPage() {
                 <th>Recipient</th>
                 <th>Owner</th>
               </tr>
-              {posts.map((item) => {
+              {data.map((item) => {
                 return (
                   <tr key={item.id} className="font-heading py-3">
-                    <td className="py-6">No 1</td>
-                    <td>No 2</td>
-                    <td>No3</td>
-                    <td>No 4</td>
-                    <td>No 1</td>
+                    <td className="py-6">{String(item?.id)}</td>
+                    <td className="text-center">{String(item?.orderId)}</td>
+                    <td className="text-center">
+                      {String(Number(item?.amount) / 10 ** 18)}
+                    </td>
+                    <td className="text-center">{item?.recipient}</td>
+                    <td className="text-center">{item?.owner}</td>
                   </tr>
                 );
               })}

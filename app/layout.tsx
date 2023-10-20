@@ -9,12 +9,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import {
-  polygonMumbai,
-  celoAlfajores,
-  avalancheFuji,
-  lineaTestnet,
-} from "wagmi/chains";
+import { polygonMumbai, avalancheFuji, bscTestnet } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { ToastContainer } from "react-toastify";
@@ -38,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const { chains, publicClient } = configureChains(
-    [polygonMumbai, celoAlfajores, avalancheFuji, lineaTestnet],
+    [polygonMumbai, avalancheFuji, bscTestnet],
     [alchemyProvider({ apiKey: "" }), publicProvider()]
   );
 
