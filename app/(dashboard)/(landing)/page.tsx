@@ -17,7 +17,7 @@ export default function Home() {
             Automate sending payment on your favourite chain and across chains.
           </p>
           <div className="space-x-4">
-            <Link href="/todo" className={cn(buttonVariants({ size: "lg" }))}>
+            <Link href="/order" className={cn(buttonVariants({ size: "lg" }))}>
               Create Order
             </Link>
             <Link
