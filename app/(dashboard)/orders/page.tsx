@@ -8,34 +8,37 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 import { compareDesc } from "date-fns";
-import todoABI from "../../../abi/todo.json";
+import nativeABI from "../../../abi/native.json";
 import { ethers } from "ethers";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { polygon_native } from "@/utils/constant";
+import { useAccount, useNetwork } from "wagmi";
 
 import { formatDate } from "@/lib/utils";
 
 export default function DashPage() {
   const [state, setState] = useState(true);
+  const { address } = useAccount();
   const createReadContract = async () => {
     const { ethereum } = window;
     const provider = new ethers.BrowserProvider(ethereum);
     const payContract = new ethers.Contract(
-      "0x577336CBadDDe8F312feA34DD0885830d9fBB0b3",
-      todoABI.abi,
+      polygon_native,
+      nativeABI.abi,
       provider
     );
     return payContract;
   };
 
-  const getTodos = async () => {
+  const getOrders = async () => {
     const contract = await createReadContract();
-    const data = await contract.getAllTodos("pending");
+    const data = await contract.getOrders(address);
     console.log(data);
   };
 
   useEffect(() => {
-    getTodos();
+    getOrders();
   }, []);
 
   const allPosts = [
@@ -215,7 +218,6 @@ export default function DashPage() {
                     <td>No 4</td>
                     <td>No 1</td>
                     <td>No 2</td>
-                    <td>No3</td>
                     <td>No 4</td>
                     <td>No 4</td>
                     <td>No 4</td>

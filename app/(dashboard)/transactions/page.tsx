@@ -138,33 +138,19 @@ export default function TransactionPage() {
             <tbody>
               <tr className="font-heading">
                 <th>Id</th>
-                <th>Name</th>
-                <th>Order Amount</th>
-                <th>Total Amount</th>
-                <th>Interval for payment (seconds)</th>
-                <th>Order Complete Status</th>
+                <th>Order id</th>
+                <th>Amount</th>
                 <th>Recipient</th>
-                <th>Order Status </th>
                 <th>Owner</th>
-                <th>Amount Paid Out</th>
-                <th>Edit</th>
               </tr>
               {posts.map((item) => {
                 return (
                   <tr key={item.id} className="font-heading py-3">
-                    <td className="py-3">No 1</td>
+                    <td className="py-6">No 1</td>
                     <td>No 2</td>
                     <td>No3</td>
                     <td>No 4</td>
                     <td>No 1</td>
-                    <td>No 2</td>
-                    <td>No3</td>
-                    <td>No 4</td>
-                    <td>No 4</td>
-                    <td>No 4</td>
-                    <Link href="/orders/native/1">
-                      <td>Edit</td>
-                    </Link>
                   </tr>
                 );
               })}
@@ -179,33 +165,19 @@ export default function TransactionPage() {
             <tbody>
               <tr className="font-heading">
                 <th>Id</th>
-                <th>Name</th>
-                <th>Order Amount</th>
-                <th>Total Amount</th>
-                <th>Interval for payment (seconds)</th>
-                <th>Order Complete Status</th>
+                <th>Order id</th>
+                <th>Amount</th>
                 <th>Recipient</th>
-                <th>Order Status </th>
                 <th>Owner</th>
-                <th>Amount Paid Out</th>
-                <th>Edit</th>
               </tr>
               {posts.map((item) => {
                 return (
                   <tr key={item.id} className="font-heading py-3">
-                    <td className="py-3">No 1</td>
+                    <td className="py-6">No 1</td>
                     <td>No 2</td>
                     <td>No3</td>
                     <td>No 4</td>
                     <td>No 1</td>
-                    <td>No 2</td>
-                    <td>No3</td>
-                    <td>No 4</td>
-                    <td>No 4</td>
-                    <td>No 4</td>
-                    <Link href="/orders/erc/1">
-                      <td>Edit</td>
-                    </Link>
                   </tr>
                 );
               })}
