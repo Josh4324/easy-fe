@@ -128,7 +128,7 @@ export default function OrderPage() {
               </div>
 
               <button className={` ${cn(buttonVariants())} mt-3 `}>
-                Create Order
+                Edit Order
               </button>
             </div>
           </form>
