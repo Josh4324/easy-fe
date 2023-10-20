@@ -4,7 +4,6 @@
 // @ts-nocheck
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 import { compareDesc } from "date-fns";
@@ -14,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { polygon_native } from "@/utils/constant";
 import { useAccount, useNetwork } from "wagmi";
+import { toast } from "react-toastify";
 
 export default function DashPage() {
   const [state, setState] = useState(true);
@@ -29,6 +29,113 @@ export default function DashPage() {
       provider
     );
     return payContract;
+  };
+
+  const createWriteContract = async () => {
+    const { ethereum } = window;
+    const provider = new ethers.BrowserProvider(ethereum);
+    const signer = await provider.getSigner();
+    const payContract = new ethers.Contract(
+      polygon_native,
+      nativeABI.abi,
+      signer
+    );
+    return payContract;
+  };
+
+  const pauseOrder = async (evt, id) => {
+    evt.preventDefault();
+    const contract = await createWriteContract();
+
+    const id2 = toast.loading("Transaction in progress..");
+    const ids = [id];
+
+    try {
+      const tx = await contract.pauseOrder(ids);
+
+      await tx.wait();
+      window.location.reload();
+
+      toast.update(id2, {
+        render: "Transaction successfull, Order has been paused",
+        type: "success",
+        isLoading: false,
+        autoClose: 1000,
+        closeButton: true,
+      });
+    } catch (error) {
+      console.log(error);
+      toast.update(id, {
+        render: `${error.reason}`,
+        type: "error",
+        isLoading: false,
+        autoClose: 1000,
+        closeButton: true,
+      });
+    }
+  };
+
+  const startOrder = async (evt, id) => {
+    evt.preventDefault();
+    const contract = await createWriteContract();
+
+    const id2 = toast.loading("Transaction in progress..");
+    const ids = [id];
+
+    try {
+      const tx = await contract.startOrder(ids);
+
+      await tx.wait();
+      window.location.reload();
+
+      toast.update(id2, {
+        render: "Transaction successfull, Order has been restarted",
+        type: "success",
+        isLoading: false,
+        autoClose: 1000,
+        closeButton: true,
+      });
+    } catch (error) {
+      console.log(error);
+      toast.update(id, {
+        render: `${error.reason}`,
+        type: "error",
+        isLoading: false,
+        autoClose: 1000,
+        closeButton: true,
+      });
+    }
+  };
+
+  const deleteOrder = async (evt, id) => {
+    evt.preventDefault();
+    const contract = await createWriteContract();
+
+    const id2 = toast.loading("Transaction in progress..");
+
+    try {
+      const tx = await contract.deleteOrder(id);
+
+      await tx.wait();
+      window.location.reload();
+
+      toast.update(id2, {
+        render: "Transaction successfull, Order has been deleted",
+        type: "success",
+        isLoading: false,
+        autoClose: 1000,
+        closeButton: true,
+      });
+    } catch (error) {
+      console.log(error);
+      toast.update(id, {
+        render: `${error.reason}`,
+        type: "error",
+        isLoading: false,
+        autoClose: 1000,
+        closeButton: true,
+      });
+    }
   };
 
   const getOrders = async () => {
@@ -173,9 +280,17 @@ export default function DashPage() {
                       {String(Number(item?.amount) / 10 ** 18)}
                     </td>
                     <td className="text-center">{String(item?.interval)}</td>
-                    <td className="text-center">{String(item?.status)}</td>
+                    <td className="text-center">
+                      {String(item?.status) === "true"
+                        ? "Completed"
+                        : "Ongoing"}
+                    </td>
                     <td className="text-center">{item?.recipient}</td>
-                    <td className="text-center">{String(item?.or_status)}</td>
+                    <td className="text-center">
+                      {String(item?.or_status) === "true"
+                        ? "Paused"
+                        : "Running"}
+                    </td>
                     <td className="text-center">
                       {String(Number(item?.amountPaid) / 10 ** 18)}
                     </td>
@@ -184,13 +299,25 @@ export default function DashPage() {
                     </Link>
 
                     <td>
-                      <button>Pause</button>
+                      <button
+                        onClick={(evt) => pauseOrder(evt, String(item?.id))}
+                      >
+                        Pause
+                      </button>
                     </td>
                     <td>
-                      <button>Start</button>
+                      <button
+                        onClick={(evt) => startOrder(evt, String(item?.id))}
+                      >
+                        Start
+                      </button>
                     </td>
                     <td>
-                      <button>Delete</button>
+                      <button
+                        onClick={(evt) => deleteOrder(evt, String(item?.id))}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 );

@@ -1,4 +1,4 @@
-export const polygon_native = "0x5Ea709EaF6A50E1AeC707224144661D60ba951cf";
+export const polygon_native = "0x23bbD1d11FAeE4F20b3D99fee27D5Bf4a7C4431f";
 
 export const bnb_pay = "0x3C2838D7E987030ac13CDFd8BB4c280F02606058";
 export const polygon_pay = "0x603EEc3a76D055eb41eAc107e0084B3CD17dCe8F";

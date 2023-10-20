@@ -45,8 +45,6 @@ export default function OrderPage() {
     evt.preventDefault();
     const contract = await createWriteContract();
 
-    const id = toast.loading("Transaction in progress..");
-
     const today = Math.floor(new Date().getTime() / 1000);
     const dofp = Math.floor(new Date(dofpRef.current.value).getTime() / 1000);
     const dolp = Math.floor(new Date(dolpRef.current.value).getTime() / 1000);
@@ -55,6 +53,12 @@ export default function OrderPage() {
 
     const fp = dofp - today;
     const lp = dolp - today;
+
+    if (lp < 0) {
+      return toast.error("You cannot enter past date");
+    }
+
+    const id = toast.loading("Transaction in progress..");
 
     try {
       const tx = await contract.createOrder(
