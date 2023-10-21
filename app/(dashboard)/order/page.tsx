@@ -101,7 +101,7 @@ export default function OrderPage() {
 
   return (
     <section className="container flex flex-col  gap-6 py-8 md:max-w-[64rem] md:py-12 lg:py-24">
-      <div className="flex justify-between w-3/12 mb-5">
+      {/*   <div className="flex justify-between w-3/12 mb-5">
         <button
           onClick={() => setState(false)}
           className={` ${cn(buttonVariants())} mt-3 `}
@@ -118,7 +118,7 @@ export default function OrderPage() {
             ? network
             : network}
         </button>
-      </div>
+      </div> */}
       {state ? (
         <div className="mx-auto flex w-full flex-col gap-4 md:max-w-[58rem]">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-3xl">
@@ -126,8 +126,8 @@ export default function OrderPage() {
             {network === "maticmum"
               ? network?.slice(0, 5)
               : network === "avalanche-fuji"
-              ? network
-              : network}
+              ? "avax"
+              : "bnb"}
             )
           </h2>
 
