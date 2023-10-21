@@ -77,14 +77,16 @@ export default function OrderPage() {
       );
 
       await tx.wait();
-      window.location.href = "/orders";
+      setTimeout(() => {
+        window.location.href = "/orders";
+      }, 10000);
 
       toast.update(id, {
         render:
           "Transaction successfull, Payment will start on date of first payment",
         type: "success",
         isLoading: false,
-        autoClose: 1000,
+        autoClose: 10000,
         closeButton: true,
       });
     } catch (error) {
@@ -93,7 +95,7 @@ export default function OrderPage() {
         render: `${error.reason}`,
         type: "error",
         isLoading: false,
-        autoClose: 1000,
+        autoClose: 10000,
         closeButton: true,
       });
     }
@@ -130,6 +132,13 @@ export default function OrderPage() {
               : "bnb"}
             )
           </h2>
+
+          <div className="bg-green-950 rounded-md px-3 py-3">
+            This form allows you to create a recurring payment to the recipient,
+            the payment starts at the date of first payment and continues based
+            on the interval. The order can be paused, restarted or deleted at
+            any time.
+          </div>
 
           <form onSubmit={createOrder} className="mt-5">
             <div className="grid gap-2">

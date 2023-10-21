@@ -89,37 +89,15 @@ export default function TransactionPage() {
                     <td className="py-6">{String(item?.id)}</td>
                     <td className="text-center">{String(item?.orderId)}</td>
                     <td className="text-center">
-                      {String(Number(item?.amount) / 10 ** 18)}
+                      {String(Number(item?.amount) / 10 ** 18)}{" "}
+                      {network === "maticmum"
+                        ? network?.slice(0, 5)
+                        : network === "avalanche-fuji"
+                        ? "avax"
+                        : "bnb"}
                     </td>
                     <td className="text-center">{item?.recipient}</td>
                     <td className="text-center">{item?.owner}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </section>
-      ) : null}
-
-      {state === false ? (
-        <section style={{ marginTop: "30px", overflowX: "auto" }} className="">
-          <table className="font-heading mx-auto w-98 text-white px-3 table-auto w-full">
-            <tbody>
-              <tr className="font-heading">
-                <th>Id</th>
-                <th>Order id</th>
-                <th>Amount</th>
-                <th>Recipient</th>
-                <th>Owner</th>
-              </tr>
-              {data.map((item) => {
-                return (
-                  <tr key={item.id} className="font-heading py-3">
-                    <td className="py-6">No 1</td>
-                    <td>No 2</td>
-                    <td>No3</td>
-                    <td>No 4</td>
-                    <td>No 1</td>
                   </tr>
                 );
               })}

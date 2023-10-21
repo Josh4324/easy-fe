@@ -193,10 +193,10 @@ export default function DashPage() {
                 <th>Recipient</th>
                 <th>Order Status </th>
                 <th>Amount Paid Out</th>
-                <th>Edit</th>
-                <th>Pause</th>
-                <th>Start</th>
-                <th>Delete</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -208,10 +208,20 @@ export default function DashPage() {
                     <td className="text-center">
                       {String(Number(item?.order_amount) / 10 ** 18)
                         ? String(Number(item?.order_amount) / 10 ** 18)
-                        : null}
+                        : null}{" "}
+                      {network === "maticmum"
+                        ? network?.slice(0, 5)
+                        : network === "avalanche-fuji"
+                        ? "avax"
+                        : "bnb"}
                     </td>
                     <td className="text-center">
-                      {String(Number(item?.amount) / 10 ** 18)}
+                      {String(Number(item?.amount) / 10 ** 18)}{" "}
+                      {network === "maticmum"
+                        ? network?.slice(0, 5)
+                        : network === "avalanche-fuji"
+                        ? "avax"
+                        : "bnb"}
                     </td>
                     <td className="text-center">{String(item?.interval)}</td>
                     <td className="text-center">
@@ -226,14 +236,20 @@ export default function DashPage() {
                         : "Running"}
                     </td>
                     <td className="text-center">
-                      {String(Number(item?.amountPaid) / 10 ** 18)}
+                      {String(Number(item?.amountPaid) / 10 ** 18)}{" "}
+                      {network === "maticmum"
+                        ? network?.slice(0, 5)
+                        : network === "avalanche-fuji"
+                        ? "avax"
+                        : "bnb"}
                     </td>
                     <Link href={`/orders/native/${String(item?.id)}`}>
-                      <td className="py-5">Edit</td>
+                      <td className="py-5 px-3">Edit</td>
                     </Link>
 
                     <td>
                       <button
+                        className={` ${cn(buttonVariants())}  `}
                         onClick={(evt) => pauseOrder(evt, String(item?.id))}
                       >
                         Pause
@@ -241,6 +257,7 @@ export default function DashPage() {
                     </td>
                     <td>
                       <button
+                        className={` ${cn(buttonVariants())}  `}
                         onClick={(evt) => startOrder(evt, String(item?.id))}
                       >
                         Start
@@ -248,64 +265,11 @@ export default function DashPage() {
                     </td>
                     <td>
                       <button
+                        className={` ${cn(buttonVariants())}  `}
                         onClick={(evt) => deleteOrder(evt, String(item?.id))}
                       >
                         Delete
                       </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </section>
-      ) : null}
-
-      {state === false ? (
-        <section>
-          <table className="font-heading mx-auto w-98 text-white px-3 table-auto w-full">
-            <thead className="font-heading">
-              <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Order Amount</th>
-                <th>Total Amount</th>
-                <th>Interval for payment (seconds)</th>
-                <th>Order Complete Status</th>
-                <th>Recipient</th>
-                <th>Order Status </th>
-                <th>Amount Paid Out</th>
-                <th>Edit</th>
-                <th>Pause</th>
-                <th>Start</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((item) => {
-                return (
-                  <tr key={item.id} className="font-heading py-3">
-                    <td className="py-3">No 1</td>
-                    <td>No 2</td>
-                    <td>No3</td>
-                    <td>No 4</td>
-                    <td>No 1</td>
-                    <td>No 2</td>
-                    <td>No 4</td>
-                    <td>No 4</td>
-                    <td>No 4</td>
-                    <Link href="/orders/native/1">
-                      <td className="py-5">Edit</td>
-                    </Link>
-
-                    <td>
-                      <button>Pause</button>
-                    </td>
-                    <td>
-                      <button>Start</button>
-                    </td>
-                    <td>
-                      <button>Delete</button>
                     </td>
                   </tr>
                 );

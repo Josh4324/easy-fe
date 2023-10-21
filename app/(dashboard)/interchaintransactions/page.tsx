@@ -91,7 +91,7 @@ export default function TransactionPage() {
                     <td className="py-6">{String(item?.id)}</td>
                     <td className="text-center">{String(item?.orderId)}</td>
                     <td className="text-center">
-                      {String(Number(item?.amount) / 10 ** 6)}
+                      {String(Number(item?.amount) / 10 ** 6)} aUSDC
                     </td>
                     <td className="text-center">{item?.recipient}</td>
                     <td className="text-center">{item?.owner}</td>

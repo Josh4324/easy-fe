@@ -193,10 +193,10 @@ export default function DashPage() {
               <th>Recipient</th>
               <th>Order Status </th>
               <th>Amount Paid Out</th>
-              <th>Edit</th>
-              <th>Pause</th>
-              <th>Start</th>
-              <th>Delete</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -208,10 +208,11 @@ export default function DashPage() {
                   <td className="text-center">
                     {String(Number(item?.order_amount) / 10 ** 6)
                       ? String(Number(item?.order_amount) / 10 ** 6)
-                      : null}
+                      : null}{" "}
+                    aUSDC
                   </td>
                   <td className="text-center">
-                    {String(Number(item?.amount) / 10 ** 6)}
+                    {String(Number(item?.amount) / 10 ** 6)} aUSDC
                   </td>
                   <td className="text-center">{String(item?.interval)}</td>
                   <td className="text-center">
@@ -222,14 +223,15 @@ export default function DashPage() {
                     {String(item?.or_status) === "true" ? "Paused" : "Running"}
                   </td>
                   <td className="text-center">
-                    {String(Number(item?.amountPaid) / 10 ** 6)}
+                    {String(Number(item?.amountPaid) / 10 ** 6)} aUSDC
                   </td>
                   <Link href={`/interchainorders/native/${String(item?.id)}`}>
-                    <td className="py-5">Edit</td>
+                    <td className="py-5 px-3">Edit</td>
                   </Link>
 
                   <td>
                     <button
+                      className={` ${cn(buttonVariants())}  `}
                       onClick={(evt) => pauseOrder(evt, String(item?.id))}
                     >
                       Pause
@@ -237,6 +239,7 @@ export default function DashPage() {
                   </td>
                   <td>
                     <button
+                      className={` ${cn(buttonVariants())}  `}
                       onClick={(evt) => startOrder(evt, String(item?.id))}
                     >
                       Start
@@ -244,6 +247,7 @@ export default function DashPage() {
                   </td>
                   <td>
                     <button
+                      className={` ${cn(buttonVariants())}  `}
                       onClick={(evt) => deleteOrder(evt, String(item?.id))}
                     >
                       Delete
