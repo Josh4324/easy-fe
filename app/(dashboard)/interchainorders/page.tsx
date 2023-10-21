@@ -162,7 +162,7 @@ export default function DashPage() {
             Orders created by you.
           </p>
 
-          <div className="flex justify-between w-1/5 mb-5">
+          {/*  <div className="flex justify-between w-1/5 mb-5">
             <button
               onClick={() => setState(false)}
               className={` ${cn(buttonVariants())} mt-3 `}
@@ -175,7 +175,7 @@ export default function DashPage() {
             >
               Native
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
       <hr className="my-8" />
@@ -224,7 +224,7 @@ export default function DashPage() {
                   <td className="text-center">
                     {String(Number(item?.amountPaid) / 10 ** 6)}
                   </td>
-                  <Link href="/orders/native/1">
+                  <Link href={`/interchainorders/native/${String(item?.id)}`}>
                     <td className="py-5">Edit</td>
                   </Link>
 

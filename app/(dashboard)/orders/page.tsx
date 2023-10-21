@@ -228,7 +228,7 @@ export default function DashPage() {
                     <td className="text-center">
                       {String(Number(item?.amountPaid) / 10 ** 18)}
                     </td>
-                    <Link href="/orders/native/1">
+                    <Link href={`/orders/native/${String(item?.id)}`}>
                       <td className="py-5">Edit</td>
                     </Link>
 

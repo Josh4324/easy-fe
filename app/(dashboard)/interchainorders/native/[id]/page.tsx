@@ -13,9 +13,10 @@ import { useParams } from "next/navigation";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
 import nativeABI from "../../../../../abi/native.json";
-import { polygon_native } from "@/utils/constant";
-import { avax_native } from "@/utils/constant";
-import { bsc_native } from "@/utils/constant";
+import interABI from "../../../../../abi/inter.json";
+import { polygon_native1 } from "@/utils/constant";
+import { avax_nativ1e } from "@/utils/constant";
+import { bsc_native1 } from "@/utils/constant";
 
 export default function OrderPage() {
   const { chain } = useNetwork();
@@ -29,17 +30,17 @@ export default function OrderPage() {
   const [interval, setInterval] = useState(0);
   const native =
     network === "maticmum"
-      ? polygon_native
+      ? polygon_native1
       : network === "avalanche-fuji"
-      ? avax_native
-      : bsc_native;
+      ? avax_native1
+      : bsc_native1;
 
   const dolpRef = useRef();
 
   const createReadContract = async () => {
     const { ethereum } = window;
     const provider = new ethers.BrowserProvider(ethereum);
-    const payContract = new ethers.Contract(native, nativeABI.abi, provider);
+    const payContract = new ethers.Contract(native, interABI.abi, provider);
     return payContract;
   };
 
@@ -47,7 +48,7 @@ export default function OrderPage() {
     const { ethereum } = window;
     const provider = new ethers.BrowserProvider(ethereum);
     const signer = await provider.getSigner();
-    const payContract = new ethers.Contract(native, nativeABI.abi, signer);
+    const payContract = new ethers.Contract(native, interABI.abi, signer);
     return payContract;
   };
 
@@ -55,7 +56,7 @@ export default function OrderPage() {
     const contract = await createReadContract();
     const data = await contract.getOrder(id);
     setData(data);
-    setOrder(String(Number(data?.order_amount) / 10 ** 18));
+    setOrder(String(Number(data?.order_amount) / 10 ** 6));
     setInterval(String(data?.interval));
   };
 
@@ -68,7 +69,7 @@ export default function OrderPage() {
     const today = Math.floor(new Date().getTime() / 1000);
 
     const dolp = Math.floor(new Date(dolpRef.current.value).getTime() / 1000);
-    const order_amount = ethers.parseEther(order);
+    const order_amount = ethers.parseUnits(order, 6);
 
     const lp = dolp - today;
 
@@ -103,7 +104,7 @@ export default function OrderPage() {
 
   return (
     <section className="container flex flex-col  gap-6 py-8 md:max-w-[64rem] md:py-12 lg:py-24">
-      {/*  <div className="flex justify-between w-3/12 mb-5">
+      {/* <div className="flex justify-between w-3/12 mb-5">
         <button
           onClick={() => setState(false)}
           className={` ${cn(buttonVariants())} mt-3 `}
