@@ -15,5 +15,13 @@ export const marketingConfig: MarketingConfig = {
       title: "Transactions",
       href: "/transactions",
     },  
+    {
+      title: "Interchain Orders",
+      href: "/orders-interchain",
+    },
+    {
+      title: "Interchain Transactions",
+      href: "/transactions-interchain",
+    },  
   ],
 }

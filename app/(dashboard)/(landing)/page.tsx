@@ -21,12 +21,10 @@ export default function Home() {
               Create Order
             </Link>
             <Link
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noreferrer"
+              href="/interchain-order"
               className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
             >
-              GitHub
+              Create Inter Chain Order
             </Link>
           </div>
         </div>
