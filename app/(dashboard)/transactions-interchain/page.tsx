@@ -8,11 +8,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { ethers } from "ethers";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { avax_native } from "@/utils/constant";
+import { avax_native1 } from "@/utils/constant";
 import nativeABI from "../../../abi/native.json";
-import { polygon_native } from "@/utils/constant";
+import interABI from "../../../abi/inter.json";
+import { polygon_native1 } from "@/utils/constant";
 import { useAccount, useNetwork } from "wagmi";
-import { bsc_native } from "@/utils/constant";
+import { bsc_native1 } from "@/utils/constant";
 
 export default function TransactionPage() {
   const [state, setState] = useState(true);
@@ -23,15 +24,15 @@ export default function TransactionPage() {
 
   const native =
     network === "maticmum"
-      ? polygon_native
+      ? polygon_native1
       : network === "avalanche-fuji"
-      ? avax_native
-      : bsc_native;
+      ? avax_native1
+      : bsc_native1;
 
   const createReadContract = async () => {
     const { ethereum } = window;
     const provider = new ethers.BrowserProvider(ethereum);
-    const payContract = new ethers.Contract(native, nativeABI.abi, provider);
+    const payContract = new ethers.Contract(native, interABI.abi, provider);
     return payContract;
   };
 
@@ -82,6 +83,7 @@ export default function TransactionPage() {
                 <th>Amount</th>
                 <th>Recipient</th>
                 <th>Owner</th>
+                <th>Destination Chain</th>
               </tr>
               {data.map((item) => {
                 return (
@@ -89,10 +91,11 @@ export default function TransactionPage() {
                     <td className="py-6">{String(item?.id)}</td>
                     <td className="text-center">{String(item?.orderId)}</td>
                     <td className="text-center">
-                      {String(Number(item?.amount) / 10 ** 18)}
+                      {String(Number(item?.amount) / 10 ** 6)}
                     </td>
                     <td className="text-center">{item?.recipient}</td>
                     <td className="text-center">{item?.owner}</td>
+                    <td className="text-center">{item?.dchain}</td>
                   </tr>
                 );
               })}
