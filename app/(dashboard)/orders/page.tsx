@@ -161,7 +161,7 @@ export default function DashPage() {
             Orders created by you.
           </p>
 
-          <div className="flex justify-between w-1/5 mb-5">
+          {/*  <div className="flex justify-between w-1/5 mb-5">
             <button
               onClick={() => setState(false)}
               className={` ${cn(buttonVariants())} mt-3 `}
@@ -174,7 +174,7 @@ export default function DashPage() {
             >
               Native
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
       <hr className="my-8" />

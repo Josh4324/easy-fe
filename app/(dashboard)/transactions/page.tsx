@@ -54,7 +54,7 @@ export default function TransactionPage() {
             Transactions
           </h1>
 
-          <div className="flex justify-between w-1/5 mb-5">
+          {/*  <div className="flex justify-between w-1/5 mb-5">
             <button
               onClick={() => setState(false)}
               className={` ${cn(buttonVariants())} mt-3 `}
@@ -67,7 +67,7 @@ export default function TransactionPage() {
             >
               Native
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
       <hr className="my-8" />
