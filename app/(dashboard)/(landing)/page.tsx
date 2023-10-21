@@ -14,7 +14,8 @@ export default function Home() {
             EasyPay
           </h1>
           <p className="max-w-[42rem]  leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-            Automate sending payment on your favourite chain and across chains.
+            Automate sending recurring payment on your favourite chain and
+            across chains.
           </p>
           <div className="space-x-4">
             <Link href="/order" className={cn(buttonVariants({ size: "lg" }))}>
