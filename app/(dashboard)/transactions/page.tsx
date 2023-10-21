@@ -4,34 +4,34 @@
 // @ts-nocheck
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
-import { compareDesc } from "date-fns";
 import { ethers } from "ethers";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-
+import { avax_native } from "@/utils/constant";
 import nativeABI from "../../../abi/native.json";
-
 import { polygon_native } from "@/utils/constant";
-import { useAccount } from "wagmi";
-
-import { formatDate } from "@/lib/utils";
+import { useAccount, useNetwork } from "wagmi";
+import { bsc_native } from "@/utils/constant";
 
 export default function TransactionPage() {
   const [state, setState] = useState(true);
   const { address } = useAccount();
   const [data, setData] = useState([]);
+  const { chain } = useNetwork();
+  const network = chain?.network;
+
+  const native =
+    network === "maticmum"
+      ? polygon_native
+      : network === "avalanche-fuji"
+      ? avax_native
+      : bsc_native;
 
   const createReadContract = async () => {
     const { ethereum } = window;
     const provider = new ethers.BrowserProvider(ethereum);
-    const payContract = new ethers.Contract(
-      polygon_native,
-      nativeABI.abi,
-      provider
-    );
+    const payContract = new ethers.Contract(native, nativeABI.abi, provider);
     return payContract;
   };
 
@@ -112,7 +112,7 @@ export default function TransactionPage() {
                 <th>Recipient</th>
                 <th>Owner</th>
               </tr>
-              {posts.map((item) => {
+              {data.map((item) => {
                 return (
                   <tr key={item.id} className="font-heading py-3">
                     <td className="py-6">No 1</td>

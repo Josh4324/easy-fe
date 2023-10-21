@@ -14,6 +14,8 @@ import { ethers } from "ethers";
 import { toast } from "react-toastify";
 import nativeABI from "../../../../../abi/native.json";
 import { polygon_native } from "@/utils/constant";
+import { avax_native } from "@/utils/constant";
+import { bsc_native } from "@/utils/constant";
 
 export default function OrderPage() {
   const { chain } = useNetwork();
@@ -25,17 +27,19 @@ export default function OrderPage() {
   const [state, setState] = useState(true);
   const [order, setOrder] = useState(0);
   const [interval, setInterval] = useState(0);
+  const native =
+    network === "maticmum"
+      ? polygon_native
+      : network === "avalanche-fuji"
+      ? avax_native
+      : bsc_native;
 
   const dolpRef = useRef();
 
   const createReadContract = async () => {
     const { ethereum } = window;
     const provider = new ethers.BrowserProvider(ethereum);
-    const payContract = new ethers.Contract(
-      polygon_native,
-      nativeABI.abi,
-      provider
-    );
+    const payContract = new ethers.Contract(native, nativeABI.abi, provider);
     return payContract;
   };
 
@@ -43,11 +47,7 @@ export default function OrderPage() {
     const { ethereum } = window;
     const provider = new ethers.BrowserProvider(ethereum);
     const signer = await provider.getSigner();
-    const payContract = new ethers.Contract(
-      polygon_native,
-      nativeABI.abi,
-      signer
-    );
+    const payContract = new ethers.Contract(native, nativeABI.abi, signer);
     return payContract;
   };
 

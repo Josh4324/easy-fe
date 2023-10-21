@@ -4,32 +4,34 @@
 // @ts-nocheck
 "use client";
 
-import Link from "next/link";
 import { useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { useAccount, useNetwork } from "wagmi";
-import { Icons } from "@/components/icons";
-import { compareDesc } from "date-fns";
 import nativeABI from "../../../abi/native.json";
 import { ethers } from "ethers";
 import { polygon_native } from "@/utils/constant";
+import { avax_native } from "@/utils/constant";
+import { bsc_native } from "@/utils/constant";
 import { toast } from "react-toastify";
 
 export default function OrderPage() {
   const { chain } = useNetwork();
   const network = chain?.network;
   const [state, setState] = useState(true);
+  const native =
+    network === "maticmum"
+      ? polygon_native
+      : network === "avalanche-fuji"
+      ? avax_native
+      : bsc_native;
 
   const createWriteContract = async () => {
     const { ethereum } = window;
     const provider = new ethers.BrowserProvider(ethereum);
     const signer = await provider.getSigner();
-    const payContract = new ethers.Contract(
-      polygon_native,
-      nativeABI.abi,
-      signer
-    );
+
+    const payContract = new ethers.Contract(native, nativeABI.abi, signer);
     return payContract;
   };
 
@@ -110,13 +112,23 @@ export default function OrderPage() {
           onClick={() => setState(true)}
           className={` ${cn(buttonVariants())} mt-3 `}
         >
-          Matic
+          {network === "maticmum"
+            ? network?.slice(0, 5)
+            : network === "avalanche-fuji"
+            ? network
+            : network}
         </button>
       </div>
       {state ? (
         <div className="mx-auto flex w-full flex-col gap-4 md:max-w-[58rem]">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-3xl">
-            Create Order ({network?.slice(0, 5)})
+            Create Order (
+            {network === "maticmum"
+              ? network?.slice(0, 5)
+              : network === "avalanche-fuji"
+              ? network
+              : network}
+            )
           </h2>
 
           <form onSubmit={createOrder} className="mt-5">

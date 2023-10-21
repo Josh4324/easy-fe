@@ -12,22 +12,28 @@ import { ethers } from "ethers";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { polygon_native } from "@/utils/constant";
+import { avax_native } from "@/utils/constant";
 import { useAccount, useNetwork } from "wagmi";
 import { toast } from "react-toastify";
+import { bsc_native } from "@/utils/constant";
 
 export default function DashPage() {
   const [state, setState] = useState(true);
   const [data, setData] = useState([]);
   const { address } = useAccount();
+  const { chain } = useNetwork();
+  const network = chain?.network;
+  const native =
+    network === "maticmum"
+      ? polygon_native
+      : network === "avalanche-fuji"
+      ? avax_native
+      : bsc_native;
 
   const createReadContract = async () => {
     const { ethereum } = window;
     const provider = new ethers.BrowserProvider(ethereum);
-    const payContract = new ethers.Contract(
-      polygon_native,
-      nativeABI.abi,
-      provider
-    );
+    const payContract = new ethers.Contract(native, nativeABI.abi, provider);
     return payContract;
   };
 
@@ -35,11 +41,7 @@ export default function DashPage() {
     const { ethereum } = window;
     const provider = new ethers.BrowserProvider(ethereum);
     const signer = await provider.getSigner();
-    const payContract = new ethers.Contract(
-      polygon_native,
-      nativeABI.abi,
-      signer
-    );
+    const payContract = new ethers.Contract(native, nativeABI.abi, signer);
     return payContract;
   };
 
@@ -147,74 +149,6 @@ export default function DashPage() {
   useEffect(() => {
     getOrders();
   }, []);
-
-  const allPosts = [
-    {
-      _id: 0,
-      published: "2011-10-11",
-      image:
-        "https://res.cloudinary.com/josh4324/image/upload/v1695643970/vrxhjnw8yxnphecojnde.png",
-      title: "Title 1",
-      description: "Description 1",
-      date: "2011-10-11",
-      slug: "slug",
-    },
-    {
-      _id: 1,
-      published: "2012-10-11",
-      image:
-        "https://res.cloudinary.com/josh4324/image/upload/v1695643970/vrxhjnw8yxnphecojnde.png",
-      title: "Title 1",
-      description: "Description 1",
-      date: "2011-10-11",
-      slug: "slug",
-    },
-    {
-      _id: 2,
-      published: "2013-10-11",
-      image:
-        "https://res.cloudinary.com/josh4324/image/upload/v1695643970/vrxhjnw8yxnphecojnde.png",
-      title: "Title 1",
-      description: "Description 1",
-      date: "2011-10-11",
-      slug: "slug",
-    },
-    {
-      _id: 3,
-      published: "2014-10-11",
-      image:
-        "https://res.cloudinary.com/josh4324/image/upload/v1695643970/vrxhjnw8yxnphecojnde.png",
-      title: "Title 1",
-      description: "Description 1",
-      date: "2011-10-11",
-      slug: "slug",
-    },
-    {
-      _id: 4,
-      published: "2015-10-11",
-      image:
-        "https://res.cloudinary.com/josh4324/image/upload/v1695643970/vrxhjnw8yxnphecojnde.png",
-      title: "Title 1",
-      description: "Description 1",
-      date: "2011-10-11",
-      slug: "slug",
-    },
-    {
-      _id: 5,
-      published: "2016-10-11",
-      image:
-        "https://res.cloudinary.com/josh4324/image/upload/v1695643970/vrxhjnw8yxnphecojnde.png",
-      title: "Title 1",
-      description: "Description 1",
-      date: "2011-10-11",
-      slug: "slug",
-    },
-  ];
-  const posts = allPosts
-    .filter((post) => post.published)
-    .sort((a, b) => {
-      return compareDesc(new Date(a.date), new Date(b.date));
-    });
 
   return (
     <div className="container ">
@@ -348,7 +282,7 @@ export default function DashPage() {
               </tr>
             </thead>
             <tbody>
-              {posts.map((item) => {
+              {data.map((item) => {
                 return (
                   <tr key={item.id} className="font-heading py-3">
                     <td className="py-3">No 1</td>
