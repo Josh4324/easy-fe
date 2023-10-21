@@ -11,7 +11,7 @@ export default function Home() {
       <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
         <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
           <h1 className="font-heading font-bold text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
-            EasyPay
+            RecurraPay
           </h1>
           <p className="max-w-[42rem]  leading-normal text-muted-foreground sm:text-xl sm:leading-8">
             Automate sending recurring payment on your favourite chain and
@@ -132,8 +132,8 @@ export default function Home() {
             Proudly Open Source
           </h2>
           <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-            EasyPay is open source and powered by open source software. <br />{" "}
-            The code is available on{" "}
+            RecurraPay is open source and powered by open source software.{" "}
+            <br /> The code is available on{" "}
             <Link
               href={siteConfig.links.github}
               target="_blank"
