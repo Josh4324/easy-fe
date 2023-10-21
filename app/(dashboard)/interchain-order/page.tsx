@@ -4,7 +4,7 @@
 // @ts-nocheck
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { useAccount, useNetwork } from "wagmi";
@@ -38,6 +38,7 @@ export default function OrderPage() {
   const [gas, setGasFee] = useState(0);
   const [allowance, setAllowance] = useState(0);
   const [currentAmount, setCurrentAmount] = useState(0);
+  const [balance, setBalance] = useState(0);
   const { address } = useAccount();
 
   const api = new AxelarQueryAPI({ environment: Environment.TESTNET });
@@ -168,7 +169,7 @@ export default function OrderPage() {
     }
     const amount = await contract.allowance(address, caddress);
     const balance = await contract.balanceOf(address);
-    //setBalance(balance / 10 ** 6);
+    setBalance(Number(balance) / 10 ** 6);
     setAllowance(Number(amount) / 10 ** 6);
   };
 
@@ -255,6 +256,10 @@ export default function OrderPage() {
     }
   };
 
+  useEffect(() => {
+    allowanceCheck();
+  }, [allowance, network]);
+
   return (
     <section className="container flex flex-col  gap-6 py-8 md:max-w-[64rem] md:py-12 lg:py-24">
       {state ? (
@@ -275,6 +280,25 @@ export default function OrderPage() {
                   ref={nameRef}
                   placeholder="Enter Order Name"
                   required
+                />
+              </div>
+              <div className="grid gap-1 mb-3">
+                <label>Select Coin</label>
+                <select
+                  className={cn(
+                    "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                  )}
+                >
+                  <option>aUSDC</option>
+                </select>
+              </div>
+              <div className="grid gap-1 mb-3">
+                <label>aUSDC Balance</label>
+                <input
+                  value={`Balance - ${balance} aUSDC`}
+                  className={cn(
+                    "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                  )}
                 />
               </div>
               <div className="grid gap-1 mb-3">
@@ -338,18 +362,23 @@ export default function OrderPage() {
                   required
                 />
               </div>
-              <select
-                ref={chainRef}
-                onChange={() => calculateGas(chainRef.current.value)}
-                className={cn(
-                  "flex h-9 w-full rounded-md mb-3 border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                )}
-              >
-                <option>Select Destination Chain</option>
-                <option> Polygon </option>
-                <option>Avalanche</option>
-                <option>Binance</option>
-              </select>
+
+              <div className="grid gap-1 mb-3">
+                <label>Destination Chain</label>
+                <select
+                  ref={chainRef}
+                  onChange={() => calculateGas(chainRef.current.value)}
+                  className={cn(
+                    "flex h-9 w-full rounded-md mb-3 border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                  )}
+                >
+                  <option>Select Destination Chain</option>
+                  <option> Polygon </option>
+                  <option>Avalanche</option>
+                  <option>Binance</option>
+                </select>
+              </div>
+
               <div className="grid gap-1">
                 <label>Enter Recipient Address</label>
                 <input
