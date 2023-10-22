@@ -180,7 +180,7 @@ export default function DashPage() {
       <hr className="my-8" />
 
       {state ? (
-        <section>
+        <section className="overflow-auto">
           <table className="font-heading mx-auto w-98 text-white px-3 table-auto w-full">
             <thead className="font-heading">
               <tr>

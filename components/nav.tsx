@@ -8,7 +8,7 @@ import { MainNavItem } from "@/types";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { Icons } from "./icons";
-//import { MobileNav } from "@/components/mobile-nav";
+import { MobileNav } from "@/components/mobile-nav";
 
 interface MainNavProps {
   items?: MainNavItem[];
@@ -52,9 +52,9 @@ export default function Nav({ items, children }: MainNavProps) {
         {showMobileMenu ? <Icons.close /> : <Icons.logo />}
         <span className="font-bold">Menu</span>
       </button>
-      {/* {showMobileMenu && items && (
+      {showMobileMenu && items && (
         <MobileNav items={items}>{children}</MobileNav>
-      )} */}
+      )}
     </div>
   );
 }
